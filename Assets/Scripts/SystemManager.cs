@@ -39,7 +39,8 @@ public class SystemManager : MonoBehaviour
     public InputField loginPassword;
     [Header("ResetUser")]
     public InputField resetPassword;
-    public InputField ResetEmail;
+    public InputField resetEmail;
+    public InputField resetUsername;
     [Header("ErrorText")]
     public TextMeshProUGUI LoginError;
     public TextMeshProUGUI createError;
@@ -61,7 +62,7 @@ public class SystemManager : MonoBehaviour
 
     public void CreateNewUser()
     {
-        StartCoroutine(CreateUser(createUsername.text, createEmail.text, createPassword.text));
+        StartCoroutine(CreateUser(createUsername.text, createPassword.text, createEmail.text));
         user = createUsername.text;
         password = createPassword.text;
         email = createEmail.text;
@@ -118,7 +119,7 @@ public class SystemManager : MonoBehaviour
     }
     public void ForgotPassword()
     {
-        StartCoroutine(ForgotPassword(ResetEmail));
+        StartCoroutine(ForgotPassword(resetEmail));
         if (serverText == "Login Successful")
         {
             Debug.Log("you did it");
@@ -167,18 +168,25 @@ public class SystemManager : MonoBehaviour
        //either make button that resends email or send them back to previous panel
     }
     
-   
-    public void ConfirmNewPassword(InputField newPassword1  )
+   IEnumerator ConfirmPassword(InputField newPassword1, InputField username)
     {
-       
-        if (newPassword1.text =="" )
+        string confirmPasswordURL = "http://localhost/nsirpg/updatepassword.php";
+        WWWForm form = new WWWForm();
+
+        form.AddField("password_Post", newPassword1.text);
+        form.AddField("username_Post", username.text);
+        UnityWebRequest webRequest = UnityWebRequest.Post(confirmPasswordURL, form);
+        yield return webRequest.SendWebRequest();
+        Debug.Log(webRequest.downloadHandler.text);
+        if (newPassword1.text == "")
         {
             Debug.Log("Please Enter your new password the field");
         }
-        if (newPassword1.text !="")
+        if (newPassword1.text != "")
         {
             Debug.Log("gongrats you made your new password");
             password = newPassword1.text;
+           
             newPasswordPanel.SetActive(false);
             forgotPasswordPannel.SetActive(false);
             forgotpasswordemail.SetActive(true);
@@ -188,6 +196,10 @@ public class SystemManager : MonoBehaviour
         {
             Debug.Log("Error");
         }
+    }
+    public void ConfirmNewPassword( )
+    {
+        StartCoroutine(ConfirmPassword(resetPassword,resetUsername));
     }
 
 
