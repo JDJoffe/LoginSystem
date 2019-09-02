@@ -31,9 +31,10 @@ public class SystemManager : MonoBehaviour
     public GameObject newPasswordPanel;
     public GameObject createUserPanel;
     [Header("CreateUser")]
-    public InputField createUsername;
+   // public InputField createUsername;
     public InputField createPassword;
     public InputField createEmail;
+    public InputField createUsername;
     [Header("LoginUser")]
     public InputField loginUsername;
     public InputField loginPassword;
@@ -45,7 +46,12 @@ public class SystemManager : MonoBehaviour
     public TextMeshProUGUI LoginError;
     public TextMeshProUGUI createError;
     public TextMeshProUGUI resetError;
-    
+
+    public void Start()
+    {
+      
+       
+    }
 
     #region Create
     IEnumerator CreateUser(string username, string password, string email)
