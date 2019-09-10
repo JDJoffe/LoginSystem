@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
+
 
 
 #region Emailstuff
@@ -43,9 +43,9 @@ public class SystemManager : MonoBehaviour
     public InputField resetEmail;
     public InputField resetUsername;
     [Header("ErrorText")]
-    public TextMeshProUGUI LoginError;
-    public TextMeshProUGUI createError;
-    public TextMeshProUGUI resetError;
+    public Text LoginError;
+    public Text createError;
+    public Text resetError;
 
     public void Start()
     {
@@ -91,11 +91,12 @@ public class SystemManager : MonoBehaviour
         StartCoroutine(LoginUser(loginUsername.text, loginPassword.text));
         if (serverText == "Login Successful")
         {
+            LoginError.enabled = false;
             SceneManager.LoadScene(1);
         }
         if (serverText == "Incorrect Password")
         {
-            LoginError.alpha = 255;
+            LoginError.enabled = true;
             LoginError.text = serverText;
         }
     }
@@ -113,12 +114,12 @@ public class SystemManager : MonoBehaviour
         Debug.Log(webRequest.downloadHandler.text);
         if (webRequest.downloadHandler.text == "User Not Found")
         {
-            resetError.alpha = 255;
+            resetError.enabled = true;
             resetError.text = webRequest.downloadHandler.text;
         }
         else
         {
-
+            resetError.enabled = false;
             user = webRequest.downloadHandler.text;
             SendEmail(email);
         }
