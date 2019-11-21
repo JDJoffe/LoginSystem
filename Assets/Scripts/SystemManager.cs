@@ -143,7 +143,7 @@ public class SystemManager : MonoBehaviour
     {
        
         MailMessage mail = new MailMessage();
-        mail.From = new MailAddress("sqlunityclasssydney@gmail.com");
+        mail.From = new MailAddress("coblastnoid@gmail.com");
         mail.To.Add(email.text);
         mail.Subject = "NSIRPG Password Reset";
         mail.Body = "Hello Bingus Boingus " + user + "\nReset using this code: " + code;
@@ -153,7 +153,7 @@ public class SystemManager : MonoBehaviour
         //ne able to send through ports
         smtpServer.Port = 25; //numbors
         //login to google
-        smtpServer.Credentials = new NetworkCredential("sqlunityclasssydney@gmail.com", "sqlpassword") as ICredentialsByHost;
+        smtpServer.Credentials = new NetworkCredential("coblastnoid@gmail.com", "Sh00gyB00gy") as ICredentialsByHost;
         smtpServer.EnableSsl = true;
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate cert, X509Chain chain, SslPolicyErrors policyErrors)
         { return true; };
